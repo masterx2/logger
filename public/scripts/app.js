@@ -7,30 +7,22 @@
  *  - app_key: Ключ приложения, разделения статистики
  *  - server: Упла где находится точка сбора логов
  */
-var logger = new Logger.default({
+var logger = new Logger({
     appKey: 'some_id',
     server: 'http://logger.local'
 });
 
 window.addEventListener('load', function () {
-    var button = document.querySelector('#log');
-    button.addEventListener('click', function (e) {
-        logEvent();
+    document.querySelector('#log').addEventListener('click', function (e) {
+        /**
+         * Есть мнение что ответ от сервера нам не нужен
+         * ну только если `Ok, записано` =), но для дебага
+         * пока что будем парсить ответ
+         */
+        logger.log({
+            some: 'data',
+            time: new Date().getTime(),
+            browser: window.navigator.userAgent
+        })
     })
 });
-
-function logEvent() {
-    /**
-     * Есть мнение что ответ от сервера нам не нужен
-     * ну только если `Ok, записано` =), но для дебага
-     * пока что будем парсить ответ
-     */
-    logger.log({
-        some: 'data',
-        time: new Date().getTime()
-    }).then(function (data) {
-        return data.json();
-    }).then(function (data) {
-        console.log(data);
-    })
-}

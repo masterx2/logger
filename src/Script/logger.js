@@ -2,12 +2,10 @@
  * Created by masterx2 on 4/15/17.
  */
 
-import qs from 'qs';
-import _ from 'lodash';
+import defaults from 'lodash/defaults';
 import fetch from 'unfetch';
-import Promise from 'bluebird';
 
-export default class Logger {
+module.exports = class Logger {
     constructor(config) {
         this.server = config.server;
         this.appKey = config.appKey;
@@ -19,7 +17,7 @@ export default class Logger {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(_.defaults({
+            body: JSON.stringify(defaults({
                 appKey: this.appKey
             }, data))
         })
