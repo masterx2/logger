@@ -14,8 +14,8 @@ use Pimple\ServiceProviderInterface;
 
 class RedisServiceProvider implements ServiceProviderInterface {
     public function register(Container $storage) {
-        $config = $storage['config']['redis'];
-        $storage['redis'] = function () use ($config) {
+        $storage['redis'] = function ($storage) {
+            $config = $storage['config']['redis'];
             $redis = new \Redis();
             $redis->pconnect($config['host'], $config['port']);
             return $redis;
