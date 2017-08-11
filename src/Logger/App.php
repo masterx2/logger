@@ -39,7 +39,12 @@ class App {
         /** @var Request $request */
         $request = $this->storage['request'];
         $method = strtolower($request->getMethod());
-        call_user_func([$this, $method.'Method']);
+
+        try {
+            call_user_func([$this, $method.'Method']);
+        } catch (\Exception $e) {
+            http_response_code(404);
+        }
     }
 
     public function optionsMethod() {
@@ -51,7 +56,9 @@ class App {
         header('Access-Control-Allow-Headers: content-type');
     }
 
-    public function getMethod() {}
+    public function getMethod() {
+        echo 'Logger Server';
+    }
 
     public function postMethod() {
         /** @var Request $request */
@@ -59,17 +66,7 @@ class App {
         $origin = $request->server->get('HTTP_ORIGIN');
 
         header('Access-Control-Allow-Origin: ' . $origin);
-
-        // DEBUG
-//        echo json_encode([
-//            "query" => $request->query->all(),
-//            "request"  => $request->request->all(),
-//            "content" => $request->getContent(),
-//            "ass-cont-types" => $request->getAcceptableContentTypes(),
-//            "isXHR" => $request->isXmlHttpRequest(),
-//            "method" => $request->getMethod(),
-//            "headers" => $request->headers->all()
-//        ]);
+        header('Content-Type: application/json');
 
         $data = json_decode($request->getContent(), true);
 
