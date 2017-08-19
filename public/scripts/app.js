@@ -7,9 +7,9 @@
  *  - app_key: Ключ приложения, разделения статистики
  *  - server: Упла где находится точка сбора логов
  */
-var logger = new Logger({
-    appKey: 'some_id',
-    server: 'http://logger.local'
+const logger = new Logger({
+  appKey: 'some_id',
+  server: 'http://logger.local'
 });
 
 window.addEventListener('load', function () {

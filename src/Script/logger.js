@@ -3,7 +3,7 @@
  */
 
 import defaults from 'lodash/defaults';
-import fetch from 'unfetch';
+// import fetch from 'unfetch';
 
 module.exports = class Logger {
     constructor(config) {
